@@ -32,17 +32,6 @@ export default function AdminLayout({ currentPath }) {
     current: item.href === currentPath,
   }))
 
-  const formatPath = (path) => {
-    let formattedPath = path.currentPath.replace('/admin/', '').replace('-', ' ')
-    formattedPath = formattedPath.charAt(0).toUpperCase() + formattedPath.slice(1)
-    // if the title has more than one word capitalize the first letter of each word
-    if (formattedPath.includes(' ')) {
-      formattedPath = formattedPath.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-    }
-    return formattedPath;
-  }
-
-
   const signOut = (e) => {
     e.preventDefault()
     console.log('sign out')
@@ -179,11 +168,6 @@ export default function AdminLayout({ currentPath }) {
             </>
           )}
         </Disclosure>
-        <header className="bg-white shadow">
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">{ formatPath({currentPath}) }</h1>
-          </div>
-        </header>
         <Outlet />
       </div>
     </>
