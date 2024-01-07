@@ -8,6 +8,7 @@ import GuestLayout from "./components/GuestLayout";
 import AdminLayout from "./components/AdminLayout";
 import Projects from "./views/Admin/Projects";
 import Categories from "./views/Admin/Categories";
+import AllProjects from "./views/Guest/AllProjects";
 
 const router = createBrowserRouter([
     {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
             {
                 path: 'login',
                 element: <Login />
+            },
+            {
+                path: 'projects',
+                element: <AllProjects />
             }
         ]
     },

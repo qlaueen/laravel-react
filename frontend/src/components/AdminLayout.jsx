@@ -1,15 +1,10 @@
 /* eslint-disable react/prop-types */
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Outlet } from 'react-router-dom'
+import { Bars3Icon, UserIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Navigate, Outlet } from 'react-router-dom'
+import { UseStateContext } from '../contexts/UseStateContext'
 
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
 const navigation = [
   { name: 'Dashboard', href: '/admin/dashboard', current: true },
   { name: '+ New Project', href: '/admin/new-project', current: false },
@@ -26,6 +21,12 @@ function classNames(...classes) {
 }
 
 export default function AdminLayout({ currentPath }) {
+
+  const { currentUser, userToken } = UseStateContext()
+
+  if (!userToken) {
+    return <Navigate to='/login' />
+  }
 
 	const updatedNavigation = navigation.map(item => ({
     ...item,
@@ -74,7 +75,7 @@ export default function AdminLayout({ currentPath }) {
                           <Menu.Button className="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                             <span className="absolute -inset-1.5" />
                             <span className="sr-only">Open user menu</span>
-                            <img className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" />
+                            <UserIcon className='w-8 h-8 bg-black-25 p-2 rounded-4 text-white'/>
                           </Menu.Button>
                         </div>
                         <Transition
@@ -143,11 +144,12 @@ export default function AdminLayout({ currentPath }) {
                 <div className="border-t border-gray-700 pb-3 pt-4">
                   <div className="flex items-center px-5">
                     <div className="flex-shrink-0">
-                      <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
+                      <UserIcon className='w-8 h-8 bg-black-25 p-2 rounded-4 text-white'/>
+
                     </div>
                     <div className="ml-3">
-                      <div className="text-base font-medium leading-none text-white">{user.name}</div>
-                      <div className="text-sm font-medium leading-none text-gray-400">{user.email}</div>
+                      <div className="text-base font-medium leading-none text-white">{currentUser.name}</div>
+                      <div className="text-sm font-medium leading-none text-gray-400">{currentUser.email}</div>
                     </div>
                   </div>
                   <div className="mt-3 space-y-1 px-2">
